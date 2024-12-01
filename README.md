@@ -6,7 +6,6 @@ My Advent of Code 2024 solutions
 In this year I have decided to use three languages to solve the problems: TypeScript, Lua and GO. So i can learn more about these languages and improve my skills.
 Each day will have a folder with the solutions for the problems using the three languages.
 
-```
 
 ## Solutions 
 
