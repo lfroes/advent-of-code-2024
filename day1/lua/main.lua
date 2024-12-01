@@ -1,21 +1,41 @@
-local input = require("input")
+local input_src = require("input")
 
 local solution = {}
+local result_one = 0
+local similarity_score = 0
 
 function solution:compareLists()
-	self.result = 0
-	for i = 1, #self.list1 do
-		if self.list1[i] > self.list2[i] then
-			self.result = self.result + (self.list1[i] - self.list2[i])
+	result_one = 0
+	local repeat_count = {}
+
+	-- Create a table to store the repeated elements from list 2
+	for i = 1, #self.list2 do
+		if repeat_count[self.list2[i]] == nil then
+			repeat_count[self.list2[i]] = 1
 		else
-			self.result = self.result + (self.list2[i] - self.list1[i])
+			repeat_count[self.list2[i]] = repeat_count[self.list2[i]] + 1
 		end
 	end
 
-	print(self.result)
+	for i = 1, #self.list1 do
+		local num = self.list1[i]
+		if self.list1[i] > self.list2[i] then
+			result_one = result_one + (self.list1[i] - self.list2[i])
+		else
+			result_one = result_one + (self.list2[i] - self.list1[i])
+		end
+
+		-- Check if the element is repeated
+		if repeat_count[num] then
+			similarity_score = similarity_score + (num * repeat_count[num])
+		end
+	end
+
+	print(result_one)
+	print("Similarity score: " .. similarity_score)
 end
 
-function solution:splitLists()
+function solution:splitLists(input)
 	self.list1 = {}
 	self.list2 = {}
 
@@ -34,8 +54,9 @@ function solution:splitLists()
 	self:compareLists()
 end
 
-function solution:main()
-	self:splitLists()
+function solution:main(input)
+	self:splitLists(input)
+	return result_one
 end
 
-solution:main()
+solution:main(input_src)
